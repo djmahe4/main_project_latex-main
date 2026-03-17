@@ -1,0 +1,35 @@
+% --- Chapter Formatting ---
+% Numbered chapters
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries\centering}
+{\chaptertitlename\ \thechapter}
+{20pt}
+{\Huge}
+\titlespacing*{\chapter}{0pt}{-40pt}{40pt}
+
+% Unnumbered chapters
+\titleformat{name=\chapter, numberless}[display]
+{\normalfont\huge\bfseries\centering}
+{}
+{0pt}
+{\Huge}
+\titlespacing*{name=\chapter, numberless}{0pt}{-40pt}{40pt}
+
+% Enable dots (leaders) for chapters in the Table of Contents
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+
+% --- Section Formatting ---
+\titleformat{\section}
+{\normalfont\Large\bfseries}
+{\thesection}
+{1em}
+{}
+\titlespacing*{\section}{0pt}{18pt}{6pt}
+
+% --- Subsection Formatting ---
+\titleformat{\subsection}
+{\normalfont\large\bfseries}
+{\thesubsection}
+{1em}
+{}
+\titlespacing*{\subsection}{0pt}{12pt}{6pt}

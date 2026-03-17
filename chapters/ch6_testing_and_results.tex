@@ -1,0 +1,54 @@
+\chapter{TESTING AND RESULTS}
+
+\section{Introduction}
+This chapter discusses the testing strategies used to evaluate the performance, correctness, and reliability of the FIRMAI: AI-Powered IoT Firmware Vulnerability Analyzer. Since the system integrates firmware emulation, network scanning, and artificial intelligence--based malware detection, it is essential to validate each module independently and also as an integrated system. Testing ensures that the system meets its functional and non-functional requirements and performs accurately in real-world IoT environments.
+
+Different levels of testing were carried out including unit testing, integration testing, system testing, and performance testing. In addition, validation of the AI-based malware detection model was performed using standard evaluation metrics.
+
+\section{Testing Strategy}
+The testing of FIRMAI was carried out using a structured approach to ensure full coverage of all modules. The following testing methods were used:
+\begin{itemize}
+	\item Unit Testing
+	\item Integration Testing
+	\item System Testing
+	\item Performance Testing
+	\item Security Testing
+	\item AI Model Validation
+\end{itemize}
+
+\section{Unit Testing}
+Unit testing was performed to verify the functionality of individual modules in isolation.
+
+\subsection{Firmware Processing Module}
+The firmware extraction module was tested using multiple firmware formats such as.bin,.img, and compressed archives. Binwalk was verified for correct extraction of filesystem structures, kernel images, and configuration files. The output was checked for accuracy and completeness.
+
+\subsection{Network Scanning Module}
+The ARP and TCP scanning functions were tested using known test networks containing routers, cameras, and IoT boards. The module was verified for correct IP detection, MAC address extraction, and port scanning.
+
+\subsection{Malware Detection Module}
+The feature extraction and CNN classification functions were tested independently to verify that valid inputs produced expected outputs. Error handling for missing or malformed data was also validated.
+
+\section{Integration Testing}
+Integration testing was carried out to ensure that all modules worked correctly when combined. Firmware emulation results were passed to the vulnerability scanner to verify service detection. Network scanning results were integrated with the malware detection engine to correlate infected devices. The dashboard was tested to ensure it correctly displayed aggregated results from all subsystems.
+
+All modules were found to interact successfully without data loss or inconsistency.
+
+\section{System Testing}
+System testing evaluated the complete FIRMAI platform in a real-world-like environment. The system was deployed using Docker and tested on a local network containing IoT devices such as routers and ESP32 boards.
+
+The system successfully:
+\begin{itemize}
+	\item Detected all active devices
+	\item Emulated firmware images
+	\item Identified vulnerable services
+	\item Detected malicious traffic
+\end{itemize}
+
+\section{Security Testing}
+Security testing was performed to ensure the system itself was secure. The following were verified:
+\begin{itemize}
+	\item API endpoints were protected using authentication
+	\item Data was encrypted
+	\item Unauthorized access was blocked
+	\item Input validation prevented injection attacks
+\end{itemize}

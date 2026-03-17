@@ -1,0 +1,28 @@
+\appendix
+
+\chapter{SAMPLE CODE}
+
+\section{Firmware Extractor Class}
+
+\begin{lstlisting}[language=Python]
+	import binwalk
+	import os
+	
+	class FirmwareExtractor:
+	def __init__(self, firmware_path):
+	self.firmware_path = firmware_path
+	self.extract_dir = None
+	
+	def extract(self):
+	"""Extract firmware filesystem"""
+	for module in binwalk.scan(self.firmware_path,
+	signature=True,
+	quiet=True,
+	extract=True):
+	for result in module.results:
+	if result.file.path in module.extractor.output:
+	self.extract_dir = module.extractor.output[
+	result.file.path].directory
+	
+	return self.extract_dir
+\end{lstlisting}

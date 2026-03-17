@@ -1,0 +1,62 @@
+\documentclass[12pt,a4paper]{report}
+
+% --- Preamble (modular) ---
+\input{Preamble/packages}
+\input{Preamble/fonts}
+\input{Preamble/pagestyle}
+\input{Preamble/sectionoptions}
+\input{Preamble/macro}
+
+
+\begin{document}
+
+% Front matter
+\include{frontmatter/titlepage}
+\pagenumbering{roman}
+\include{frontmatter/certificate}
+\include{frontmatter/declaration}
+\include{frontmatter/acknowledgements}
+\include{frontmatter/abstract}
+
+% Table of Contents
+\cleardoublepage % Ensures ToC starts on an odd page, applying fancy style
+	\renewcommand{\contentsname}{TABLE OF CONTENTS}
+	\tableofcontents
+
+% List of Figures
+\cleardoublepage
+\renewcommand{\listfigurename}{LIST OF FIGURES}
+\listoffigures
+\addcontentsline{toc}{chapter}{LIST OF FIGURES} % Add LoF to ToC
+
+% List of Tables
+\cleardoublepage
+\renewcommand{\listtablename}{LIST OF TABLES}
+\listoftables
+\addcontentsline{toc}{chapter}{LIST OF TABLES} % Add LoT to ToC
+
+% List of Abbreviations
+\cleardoublepage
+\include{frontmatter/abbreviations}
+
+% Main Chapters
+\cleardoublepage % Start main content on an odd page
+% Switch back to Arabic numerals for main content
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\include{chapters/ch1_introduction}
+\include{chapters/ch2_literature_review}
+\include{chapters/ch3_system_analysis}
+\include{chapters/ch4_methodology}
+\include{chapters/ch5_system_implementation}
+\include{chapters/ch6_testing_and_results}
+\include{chapters/ch7_conclusions}
+
+\include{chapters/appendices}
+
+% Bibliography
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

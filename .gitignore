@@ -1,0 +1,37 @@
+## LaTeX Build Artifacts
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.toc
+*.lof
+*.lot
+*.out
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.nav
+*.snm
+*.vrb
+*.dvi
+
+## Generated PDF (uncomment if you want to track the PDF)
+# *.pdf
+
+## Build output directory
+logs/
+
+## Source/working files (not part of the final document)
+content/
+
+## OS files
+Thumbs.db
+.DS_Store
+
+## Editor files
+*.swp
+*.swo
+*~
