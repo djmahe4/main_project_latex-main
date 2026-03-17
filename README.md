@@ -17,6 +17,8 @@ LaTeX source for the project report on **FIRMAI** — an integrated AI-powered s
 ├── compile.bat           # Build script (Windows)
 ├── compile.sh            # Build script (Linux/macOS)
 ├── assets/               # Images, logos, and graphics
+├── content/              # Source/working files
+├── logs/                 # Build output directory
 ├── Preamble/             # Modular preamble configuration
 │   ├── packages.tex      # Package imports
 │   ├── fonts.tex         # Font configuration
@@ -46,7 +48,7 @@ LaTeX source for the project report on **FIRMAI** — an integrated AI-powered s
 ### Prerequisites
 
 - A LaTeX distribution (e.g., [TeX Live](https://tug.org/texlive/) or [MiKTeX](https://miktex.org/))
-- `pdflatex` and `bibtex` on your PATH
+- `xelatex` and `bibtex` on your PATH
 
 ### Compile
 
@@ -63,10 +65,12 @@ chmod +x compile.sh
 
 **Manual:**
 ```bash
-pdflatex main.tex
-bibtex main
-pdflatex main.tex
-pdflatex main.tex
+mkdir -p logs/frontmatter logs/chapters
+xelatex -output-directory=logs -interaction=nonstopmode main.tex
+bibtex logs/main
+xelatex -output-directory=logs -interaction=nonstopmode main.tex
+xelatex -output-directory=logs -interaction=nonstopmode main.tex
+mv -f logs/main.pdf .
 ```
 
 ## License
