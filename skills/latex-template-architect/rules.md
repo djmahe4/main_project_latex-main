@@ -26,7 +26,8 @@ README.md
 | `Preamble/` | LaTeX preamble files | Contents editable; do not remove files |
 | `frontmatter/` | Pre-chapter pages | Contents editable |
 | `chapters/` | Main document chapters | Add/edit; never remove existing |
-| `assets/` | Images and figures | Add freely |
+| `assets/` | Global images, logos, and icons | Add freely |
+| `assets/ch<no>/` | Chapter-specific images and data | Add per chapter (e.g., `assets/ch1/`) |
 | `examples/` | Compiled output | Auto-generated; `main.pdf` tracked |
 | `docs/diagrams/` | Mermaid sources | Add `.mmd` files; PNGs are generated |
 | `skills/` | Skill system files | Editable |

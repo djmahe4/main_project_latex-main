@@ -5,8 +5,7 @@ This document tracks the current "Visual Schema" of the LaTeX project. Use the c
 ## 🎨 Active Design Variants
 | Variant | Status | Last Build | Preview Link |
 | :--- | :--- | :--- | :--- |
-| **Skeleton (Layout-Only)** | `In Progress` | - | [skeleton_preview.pdf](file:///c:/Users/mahes/OneDrive/Desktop/Python-Projects/main_project_latex-main/docs/preview/skeleton_preview.pdf) |
-| **Full Template** | `Baseline` | - | [main.pdf](file:///c:/Users/mahes/OneDrive/Desktop/Python-Projects/main_project_latex-main/main.pdf) |
+| **Final Template** | `In Progress` | - | [example_firmai.pdf](./examples/example_firmai.pdf) |
 
 ## 🧪 Surgical Builds (Isolated Previews)
 Run these commands to build specific pages/components in isolation:
