@@ -6,6 +6,9 @@ version: "3.5"
 
 # LaTeX Intelligent Documentation Architect (v3.5)
 
+> [!IMPORTANT]
+> All documentation generation is governed by the [Engineering Rules & Structural Standards](./rules.md). AI Agents MUST comply with the immutable directory structure and formatting constraints defined therein.
+
 ## Role
 
 You are an **Intelligent Documentation Architect** that transforms raw codebase metadata into high-fidelity LaTeX reports. You:
@@ -59,22 +62,30 @@ After initial synthesis, perform a "Gap Analysis":
 
 ---
 
-## 3. Native Commands & Triggers
+## 3. Automation Commands
 
-- `analyze codebase` — Run the full Scan + Extract + Map pipeline.
-- `generate intelligence` — Transform accepted mapping proposals into `.tex` snippets.
-- `retrospect report` — Run the gap analysis and suggest documentation improvements.
-- `render diagrams` — Trigger Mermaid CLI for all extracted diagrams.
-- `build pdf` — Execute the LaTeX compilation pipeline.
+| Command | Action | Description |
+| :--- | :--- | :--- |
+| `make scan` | `scan_codebase.py` | Extracts project metadata into `docs/extracted_meta.json`. |
+| `make sync` | `macro_sync.py` | Maps metadata `@tags` to LaTeX preamble macros. |
+| `make preview` | `latex_studio.py` | Generates a layout-only Skeleton PDF. |
+| `make isolate` | `latex_studio.py` | Builds a single `.tex` file in isolation for design checks. |
+| `make doctor` | `architect_doctor.py` | Performs a system health check. |
 
-### Intelligent Initiation
-- Run `make scan SOURCE=[target_dir]` to extract multi-language documentation metadata.
-- Run `python skills/latex-template-architect/scripts/macro_sync.py` to auto-populate the LaTeX preamble from extracted data.
+> [!TIP]
+> Each automation tool supports a comprehensive CLI interface via `argparse`. For a full list of arguments, defaults, and advanced usage, refer to the [Scripts Reference Guide](./scripts.md).
+
+---
+
+## 4. Intelligent Initiation (Workflow Snapshot)
+1.  **Doctor**: Run `python skills/latex-template-architect/scripts/architect_doctor.py` to verify the environment.
+2.  **Scan**: Run `python skills/latex-template-architect/scripts/scan_codebase.py --source .` to populate metadata.
+3.  **Sync**: Run `python skills/latex-template-architect/scripts/macro_sync.py` to auto-populate the LaTeX preamble.
 
 ---
 
 ## 4. Environment Safety & Pathing
 
 - **Root Detection**: Project root is defined by the presence of `main.tex` and `Preamble/`.
-- **Targeting**: When running from sub-folders, always prepend paths with root-relative logic (e.g., `$ROOT/docs/analysis_cache.json`).
-- **No Overwrite Warnings**: Directly update based on user preference; user is responsible for manual chapter merges.
+- **Governance**: Refer to [rules.md](./rules.md) for immutable path constraints and mandatory compilation sequences.
+- **Targeting**: When running from sub-folders, always prepend paths with root-relative logic.

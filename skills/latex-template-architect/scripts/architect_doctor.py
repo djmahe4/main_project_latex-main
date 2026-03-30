@@ -52,12 +52,30 @@ def check_cache():
         print("[INIT NEEDED] Run 'make scan' first.")
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="LaTeX Architect - Strategic Diagnostic Tool (v3.5)",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+    parser.add_argument("--root", default=".", help="Project root directory for health checks")
+    parser.add_argument("--skip-latex", action="store_true", help="Skip LaTeX engine verification")
+    args = parser.parse_args()
+    
+    # Resolve absolute project root
+    ROOT_DIR = Path(args.root).resolve()
+    if not (ROOT_DIR / "Preamble").exists():
+        # Fallback to dynamic resolution if running from inside skills/ scripts/
+        ROOT_DIR = Path(__file__).parents[3]
+
     print("-" * 40)
     print("LaTeX Architect Doctor: System Health Check")
     print(f"Project Root: {ROOT_DIR}")
     print("-" * 40)
-    check_latex()
+    
+    if not args.skip_latex:
+        check_latex()
+    
     check_assets()
     check_cache()
+    
     print("-" * 40)
     print("Health Check Complete.")

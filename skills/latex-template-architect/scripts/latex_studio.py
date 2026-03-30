@@ -71,17 +71,28 @@ def build_isolate(target_file, output_dir):
         f.unlink()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("mode", choices=["preview", "isolate"])
-    parser.add_argument("--target", help="Target .tex file for isolation")
-    parser.add_argument("--main", default="main.tex", help="Root LaTeX file")
-    parser.add_argument("--output", default="docs/preview", help="Output directory")
+    parser = argparse.ArgumentParser(
+        description="LaTeX Architect - Surgical Build & Preview Manager (v3.5)",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+    parser.add_argument("mode", choices=["preview", "isolate"], help="Build mode: Layout Preview or Isolated Chapter")
+    parser.add_argument("--target", help="Target .tex file for isolation (required for 'isolate' mode)")
+    parser.add_argument("--main", default="main.tex", help="Root LaTeX file to use for skeleton previews")
+    parser.add_argument("--output", default="docs/preview", help="Output directory for generated PDFs")
+    parser.add_argument("--engine", choices=["xelatex", "pdflatex"], help="Override default engine selection")
     args = parser.parse_args()
     
+    # Standardize output path resolution (root relative)
+    root_dir = Path(__file__).parents[3]
+    output_dir = root_dir / args.output
+    
     if args.mode == "preview":
-        build_preview(args.main, args.output)
+        main_tex = Path(args.main)
+        if not main_tex.is_absolute():
+             main_tex = root_dir / args.main
+        build_preview(main_tex, output_dir)
     elif args.mode == "isolate":
         if not args.target:
             print("ERROR: --target is required for isolation mode.")
             sys.exit(1)
-        build_isolate(args.target, args.output)
+        build_isolate(args.target, output_dir)

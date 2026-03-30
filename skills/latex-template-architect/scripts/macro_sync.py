@@ -65,4 +65,18 @@ def sync():
         print(">>> No new mapping proposals found in metadata.")
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="LaTeX Architect - Autonomous Macro Synchronization (v3.5)",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+    parser.add_argument("--config", default="Preamble/config.tex", help="Path to LaTeX preamble configuration file")
+    parser.add_argument("--meta", default="docs/extracted_meta.json", help="Path to the extracted metadata JSON")
+    args = parser.parse_args()
+    
+    # Resolve absolute paths relative to project root
+    ROOT_DIR = Path(__file__).parents[3]
+    CONFIG_PATH = ROOT_DIR / args.config
+    META_PATH = ROOT_DIR / args.meta
+    
+    print(f">>> Initializing Macro Sync: {CONFIG_PATH.name}")
     sync()

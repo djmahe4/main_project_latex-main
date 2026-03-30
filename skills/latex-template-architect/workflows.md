@@ -1,30 +1,24 @@
-# Intelligent Documentation Workflows (v3.0)
-
-## Workflow 1: Intelligent Initiation (Scan & Map)
+## Workflow 1: Intelligent Initiation (Scan & Sync)
 
 **Trigger:** "Analyze codebase" / "Initialize documentation for [Project Path]"
 
 ```markdown
-1. ESCAPE & SCAN
+1. ENVIRONMENT CHECK
+   - Run `python skills/latex-template-architect/scripts/architect_doctor.py`.
+   - Report any missing logos, engines, or caches. Use `--skip-latex` for CI environments.
+
+2. ESCAPE & SCAN
    - Exit the skill directory to the parent project root.
-   - Run `powershell .\skills\latex-template\scripts\scan_codebase.ps1`.
+   - Run `python skills/latex-template-architect/scripts/scan_codebase.py --source . --ignore vendor`.
    - Read the generated `docs/extracted_meta.json`.
 
-2. EXTRACT SEMANTICS
-   - Parse `extracted_meta.json` for:
-     - Docstrings (Logic)
-     - Mermaid blocks (Diagrams)
-     - TODOs/Notes (Meta)
-   - Update `docs/analysis_cache.json` -> `extracted_items`.
+3. AUTO-SYNC MACROS
+   - Run `python skills/latex-template-architect/scripts/macro_sync.py --config Preamble/config.tex`.
+   - Automatically maps extracted `@tag` values to `\tpl*` macros.
 
-3. MAP INTENT
+4. MAP INTENT
    - Compare `extracted_items` against `document_structure.chapters`.
    - Generate `mapping_proposals` in `docs/analysis_cache.json`.
-   - LOG: "Proposed mapping [X] items to [Y] chapters."
-
-4. USER GATING
-   - Present the mapping summary to the user.
-   - Ask: "Should I proceed with synthesis or do you want to adjust the mappings?"
 ```
 
 ---
@@ -39,20 +33,31 @@
 
 2. GENERATE SNIPPETS
    - For each proposal, generate a `.tex` snippet in `chapters/generated/`.
-   - Format: `\section{...} \begin{quote} ... \end{quote}` or `\begin{figure} ... \end{figure}`.
+   - Format: `\section{...} \begin{quote} ... \end{quote}`.
 
-3. UPDATE CHAPTERS (NON-DESTRUCTIVE)
-   - Do NOT overwrite user-managed chapter files.
+3. UPDATE CHAPTERS
    - Suggest `\input{chapters/generated/filename.tex}` locations in the terminal.
-   - User is responsible for manual placement within root `.tex` files.
-
-4. LOG LINEAGE
-   - Update `last_updated` and `hash` in the cache for change tracking.
 ```
 
 ---
 
-## Workflow 3: Retrospective Review (Gap Analysis)
+## Workflow 3: Studio Verification (Previews & Surgical Builds)
+
+**Trigger:** "Preview layout" / "Isolate [File]"
+
+```markdown
+1. SKELETON PREVIEW
+   - Run `python skills/latex-template-architect/scripts/latex_studio.py preview --main main.tex`.
+   - Compiles a layout-only PDF (no body text) to verify branding and geometry.
+
+2. SURGICAL BUILD
+   - Run `python skills/latex-template-architect/scripts/latex_studio.py isolate --target frontmatter/certificate.tex`.
+   - Generates a PDF of JUST that component for rapid design checks.
+```
+
+---
+
+## Workflow 4: Retrospective & Gap Analysis
 
 **Trigger:** "Retrospect report" / "Perform gap analysis"
 
@@ -63,31 +68,25 @@
 
 2. LOG INCONSISTENCIES
    - Populate `docs/analysis_cache.json` -> `retrospective_report.issues`.
-   - Type: `redundancy` | `gap` | `unmapped_source` | `empty_chapter`.
 
 3. SUGGEST IMPROVEMENTS
-   - Propose 3-5 structural refinements (e.g., "Merge Chapter 7 into 8 based on low content density").
-   - Present these as actionable items to the user.
+   - Propose 3-5 structural refinements to the document architecture.
 ```
 
 ---
 
-## Workflow 4: Build & Render (Compile PDF + Mermaid)
+## Workflow 5: Final Render (Production)
 
-**Trigger:** "Build PDF" / "Render diagrams"
+**Trigger:** "Build PDF" / "Render production"
 
 ```markdown
 1. RENDER DIAGRAMS
-   - Locate all `extracted_items` of type "diagram".
-   - Generate/Update `.mmd` files in `docs/diagrams/`.
-   - Run: `mmdc -i docs/diagrams/<name>.mmd -o assets/<name>.png`.
+   - Run `mmdc -i docs/diagrams/<name>.mmd -o assets/ch_no/<name>.png` for any new diagrams.
 
-2. COMPILE LATEX
-   - Use the root `Makefile` if present.
-   - Or: `pdflatex -output-directory=logs main.tex`.
-   - Move final `logs/main.pdf` to `examples/[PROJECT]/main.pdf`.
+2. COMPILE PRODUCTION
+   - Use the root `Makefile` -> `make`.
+   - Ensure `main/production` mode is active in `config.tex`.
 
 3. VERIFY ARTIFACTS
-   - Check if PDF contains the rendered diagrams.
-   - Report any missing cross-references or unresolved macros.
+   - Final check of references, indices, and frontmatter.
 ```
