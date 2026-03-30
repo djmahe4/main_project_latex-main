@@ -1,140 +1,93 @@
-# Automation Workflows
+# Intelligent Documentation Workflows (v3.0)
 
-## Workflow 1: Generate a New Report
+## Workflow 1: Intelligent Initiation (Scan & Map)
 
-**Trigger:** "Generate a new LaTeX report for [title] by [authors] in [domain]"
+**Trigger:** "Analyze codebase" / "Initialize documentation for [Project Path]"
 
-```
-1. SCAN
-   - Read Preamble/macro.tex  → extract all \newcommand project macros
-   - Read main.tex            → note include order and page numbering
-   - Read examples/main.pdf   → confirm visual style
+```markdown
+1. ESCAPE & SCAN
+   - Exit the skill directory to the parent project root.
+   - Run `powershell .\skills\latex-template\scripts\scan_codebase.ps1`.
+   - Read the generated `docs/extracted_meta.json`.
 
-2. UPDATE MACROS (Preamble/macro.tex)
-   - Set \thetitle, \studentA–D, \regA–D
-   - Set \thedepartment, \thecollege, \theyear
-   - Set \theprojectguide, \thehod, etc.
+2. EXTRACT SEMANTICS
+   - Parse `extracted_meta.json` for:
+     - Docstrings (Logic)
+     - Mermaid blocks (Diagrams)
+     - TODOs/Notes (Meta)
+   - Update `docs/analysis_cache.json` -> `extracted_items`.
 
-3. UPDATE FRONTMATTER
-   - frontmatter/abstract.tex   → write project-specific abstract
-   - frontmatter/abbreviations.tex → populate abbreviations table
+3. MAP INTENT
+   - Compare `extracted_items` against `document_structure.chapters`.
+   - Generate `mapping_proposals` in `docs/analysis_cache.json`.
+   - LOG: "Proposed mapping [X] items to [Y] chapters."
 
-4. GENERATE CHAPTER STUBS
-   For each required chapter:
-   - chapters/ch1_introduction.tex   → \chapter{INTRODUCTION} + section stubs
-   - chapters/ch2_literature_review.tex → …
-   - … through ch9_conclusions.tex
-
-5. COMPILE
-   ./compile.sh
-   → Verify examples/main.pdf was created
-
-6. GENERATE DIAGRAMS
-   mmdc -i docs/diagrams/structure.mmd  -o examples/docs/diagrams/structure.png
-   mmdc -i docs/diagrams/build-flow.mmd -o examples/docs/diagrams/build-flow.png
+4. USER GATING
+   - Present the mapping summary to the user.
+   - Ask: "Should I proceed with synthesis or do you want to adjust the mappings?"
 ```
 
 ---
 
-## Workflow 2: Add a New Chapter
+## Workflow 2: Semantic Synthesis (Generate LaTeX)
 
-**Trigger:** "Add chapter [N]: [TITLE]"
+**Trigger:** "Generate intelligence" / "Synthesize accepted mappings"
 
-```
-1. Create chapters/chN_<slug>.tex with:
-   \chapter{UPPERCASE TITLE}
-   \section{Introduction}
-   % placeholder content
+```markdown
+1. LOAD PROPOSALS
+   - Read `docs/analysis_cache.json` -> `mapping_proposals` where status is "accepted".
 
-2. Insert in main.tex after the preceding chapter include:
-   \include{chapters/chN_<slug>}
+2. GENERATE SNIPPETS
+   - For each proposal, generate a `.tex` snippet in `chapters/generated/`.
+   - Format: `\section{...} \begin{quote} ... \end{quote}` or `\begin{figure} ... \end{figure}`.
 
-3. Compile to verify ToC entry appears:
-   ./compile.sh
-```
+3. UPDATE CHAPTERS (NON-DESTRUCTIVE)
+   - Do NOT overwrite user-managed chapter files.
+   - Suggest `\input{chapters/generated/filename.tex}` locations in the terminal.
+   - User is responsible for manual placement within root `.tex` files.
 
----
-
-## Workflow 3: Generate / Regenerate Diagrams
-
-**Trigger:** "Generate diagrams" / "Update diagrams"
-
-```
-1. Write / update .mmd files in docs/diagrams/
-
-2. Run mmdc for each file:
-   mmdc -i docs/diagrams/structure.mmd   -o examples/docs/diagrams/structure.png
-   mmdc -i docs/diagrams/build-flow.mmd  -o examples/docs/diagrams/build-flow.png
-   # Add further diagrams as needed (e.g., inclusion.mmd, workflow.mmd, pipeline.mmd)
-
-3. Confirm PNG files exist in examples/docs/diagrams/
+4. LOG LINEAGE
+   - Update `last_updated` and `hash` in the cache for change tracking.
 ```
 
 ---
 
-## Workflow 4: Full Rebuild from Scratch
+## Workflow 3: Retrospective Review (Gap Analysis)
 
-**Trigger:** "Clean build" / "Rebuild PDF"
+**Trigger:** "Retrospect report" / "Perform gap analysis"
 
-```
-1. Remove old artifacts:
-   rm -rf logs/
-   rm -f examples/main.pdf
+```markdown
+1. AUDIT COVERAGE
+   - List all `extracted_items` that have NO `mapping_proposal`.
+   - List all `chapters` that have NO `extracted_items` mapped to them.
 
-2. Compile fresh:
-   ./compile.sh
+2. LOG INCONSISTENCIES
+   - Populate `docs/analysis_cache.json` -> `retrospective_report.issues`.
+   - Type: `redundancy` | `gap` | `unmapped_source` | `empty_chapter`.
 
-3. Verify:
-   ls -lh examples/main.pdf
-```
-
----
-
-## Workflow 5: Deep Scan Report
-
-**Trigger:** "Scan this repo" / "Analyse template"
-
-```
-Output a structured report containing:
-
-## Project Details
-- Title, authors, department, college (from Preamble/macro.tex)
-
-## Document Structure
-- List of all \include{} calls in main.tex, in order
-- Page numbering zones (gobble / roman / arabic)
-
-## Packages Used
-- All \usepackage{} calls from Preamble/packages.tex
-
-## Formatting Summary
-- Fonts, geometry, spacing (from pagestyle.tex, fonts.tex)
-- Chapter/section format (from sectionoptions.tex)
-
-## Figures Inventory
-- All files in assets/ with their chapter associations
-
-## Build Configuration
-- Compiler, passes, output location (from compile.sh)
+3. SUGGEST IMPROVEMENTS
+   - Propose 3-5 structural refinements (e.g., "Merge Chapter 7 into 8 based on low content density").
+   - Present these as actionable items to the user.
 ```
 
 ---
 
-## Workflow 6: Validate Structure
+## Workflow 4: Build & Render (Compile PDF + Mermaid)
 
-**Trigger:** "Validate template" / "Check structure"
+**Trigger:** "Build PDF" / "Render diagrams"
 
-```
-Checks (report PASS / FAIL for each):
+```markdown
+1. RENDER DIAGRAMS
+   - Locate all `extracted_items` of type "diagram".
+   - Generate/Update `.mmd` files in `docs/diagrams/`.
+   - Run: `mmdc -i docs/diagrams/<name>.mmd -o assets/<name>.png`.
 
-□ main.tex exists
-□ All \include{} targets exist as .tex files
-□ Preamble/ has: packages.tex fonts.tex pagestyle.tex sectionoptions.tex macro.tex
-□ frontmatter/ has: cover_front.tex cover_rear.tex titlepage.tex abstract.tex
-□ chapters/ has: ch1 through ch9, list_of_publications, appendices
-□ assets/ contains at least one image file
-□ references.bib exists
-□ compile.sh is executable
-□ examples/ directory exists
-□ docs/diagrams/ contains .mmd files
+2. COMPILE LATEX
+   - Use the root `Makefile` if present.
+   - Or: `pdflatex -output-directory=logs main.tex`.
+   - Move final `logs/main.pdf` to `examples/[PROJECT]/main.pdf`.
+
+3. VERIFY ARTIFACTS
+   - Check if PDF contains the rendered diagrams.
+   - Report any missing cross-references or unresolved macros.
 ```

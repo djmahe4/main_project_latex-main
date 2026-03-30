@@ -99,17 +99,3 @@ README.md
 - Final PDF → `examples/main.pdf`
 - Never commit `logs/` contents
 
----
-
-## 🧹 Gitignore Rules
-
-The following patterns are always ignored:
-```
-*.aux *.log *.fls *.fdb_latexmk *.synctex.gz *.toc *.lof *.lot
-*.out *.bbl *.blg *.bcf *.run.xml *.nav *.snm *.vrb *.dvi
-logs/
-docs/diagrams/*.png
-docs/diagrams/*.svg
-```
-
-`examples/main.pdf` is **tracked** (not ignored).
