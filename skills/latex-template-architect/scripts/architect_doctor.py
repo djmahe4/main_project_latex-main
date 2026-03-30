@@ -2,25 +2,63 @@ import os
 import sys
 import subprocess
 from pathlib import Path
+import argparse
 
 # architect_doctor.py - v3.5 Strategic Diagnostic tool
 # Get the project root dynamically (3 levels up from this script: skills/latex-template-architect/scripts/)
-ROOT_DIR = Path(__file__).parents[3]
+import shutil
+import getpass
 
-def check_latex():
+def check_latex(selected_engines=None, manual_path=None):
     print(">>> Checking LaTeX Engine...")
-    engines = ["xelatex", "pdflatex"]
+    
+    # Defaults if none selected
+    if not selected_engines:
+        selected_engines = ["xelatex", "pdflatex", "lualatex"]
+    
     found = False
-    for engine in engines:
-        try:
-            # Check version (subprocess-safe)
-            subprocess.run([engine, "--version"], capture_output=True, check=True)
-            print(f"[OK] FOUND: {engine}")
+    current_user = getpass.getuser()
+    
+    # Known common installation paths (dynamic user-level lookup)
+    common_paths = [
+        rf"C:\Users\{current_user}\AppData\Local\Programs\MiKTeX\miktex\bin\x64",
+        r"C:\Program Files\MiKTeX\miktex\bin\x64",
+        r"C:\texlive\2024\bin\windows",
+        r"C:\texlive\2023\bin\windows",
+    ]
+    
+    if manual_path:
+        common_paths.insert(0, manual_path)
+
+    for engine in selected_engines:
+        # 1. Standard Python discovery (handles .exe automatically)
+        engine_path = shutil.which(engine)
+        
+        # 2. Check known common paths if not in system PATH
+        if not engine_path:
+            for p in common_paths:
+                test_path = Path(p) / f"{engine}.exe"
+                if test_path.exists():
+                    engine_path = str(test_path)
+                    break
+
+        if engine_path:
+            print(f"[OK] FOUND: {engine} -> {engine_path}")
             found = True
-        except (subprocess.CalledProcessError, FileNotFoundError):
-             print(f"[MISSING] {engine}")
+        else:
+            # 3. Fallback for some shell-based discovery
+            try:
+                subprocess.run([engine, "--version"], capture_output=True, shell=True, check=True)
+                print(f"[OK] SHELL_FOUND: {engine}")
+                found = True
+            except (subprocess.CalledProcessError, FileNotFoundError):
+                 print(f"[MISSING] {engine}")
+                 
     if not found:
-        print("WARNING: No LaTeX engine found in system path.")
+        print("\n[!] WARNING: No LaTeX engine found in system path.")
+        print("    If 'xelatex' works in your terminal but fails here, ensure:")
+        print(f"    - Your LaTeX bin folder is in your PATH.")
+        print(f"    - Suggested common user path: {common_paths[0]}")
     return found
 
 def check_assets():
@@ -58,6 +96,8 @@ if __name__ == "__main__":
     )
     parser.add_argument("--root", default=".", help="Project root directory for health checks")
     parser.add_argument("--skip-latex", action="store_true", help="Skip LaTeX engine verification")
+    parser.add_argument("--engine", nargs="+", help="Specific engine(s) to verify (e.g., xelatex pdflatex)")
+    parser.add_argument("--path", help="Manual path to a LaTeX bin directory to check")
     args = parser.parse_args()
     
     # Resolve absolute project root
@@ -72,7 +112,7 @@ if __name__ == "__main__":
     print("-" * 40)
     
     if not args.skip_latex:
-        check_latex()
+        check_latex(selected_engines=args.engine, manual_path=args.path)
     
     check_assets()
     check_cache()

@@ -59,8 +59,10 @@ python scripts/latex_studio.py isolate --target chapters/introduction.tex
 
 | Argument | Default | Description |
 | :--- | :--- | :--- |
-| `--root` | `.` | Project root directory to check. |
+| `--root` | `.` | Project root directory for health checks. |
 | `--skip-latex` | `False` | Skip verification of LaTeX engines (xelatex/pdflatex). |
+| `--engine` | `["xelatex", "pdflatex", "lualatex"]` | Specific engine(s) to verify (e.g., `--engine xelatex`). |
+| `--path` | `None` | Manual path to a LaTeX bin directory to check first. |
 
 **Example:**
 ```bash
