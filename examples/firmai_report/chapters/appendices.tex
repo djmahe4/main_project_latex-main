@@ -1,0 +1,47 @@
+\chapter*{APPENDIX 1: SAMPLE CODE}
+\addcontentsline{toc}{chapter}{APPENDIX 1: SAMPLE CODE}
+
+\section*{Firmware Extractor Class}
+
+\begin{lstlisting}[language=Python]
+import binwalk
+import os
+
+class FirmwareExtractor:
+    def __init__(self, firmware_path):
+        self.firmware_path = firmware_path
+        self.extract_dir = None
+
+    def extract(self):
+        """Extract firmware filesystem"""
+        for module in binwalk.scan(self.firmware_path,
+                                   signature=True,
+                                   quiet=True,
+                                   extract=True):
+            for result in module.results:
+                if result.file.path in module.extractor.output:
+                    self.extract_dir = module.extractor.output[
+                        result.file.path].directory
+
+        return self.extract_dir
+\end{lstlisting}
+
+\chapter*{APPENDIX 2: BILLS OF PURCHASED MATERIALS}
+\addcontentsline{toc}{chapter}{APPENDIX 2: BILLS OF PURCHASED MATERIALS}
+
+\begin{center}
+\begin{longtable}{|c|l|c|c|c|}
+    \hline
+    \textbf{Sl. No.} & \textbf{Item Description} & \textbf{Quantity} & \textbf{Unit Price (\rupee)} & \textbf{Total (\rupee)} \\
+    \hline
+    \endfirsthead
+    \hline
+    \textbf{Sl. No.} & \textbf{Item Description} & \textbf{Quantity} & \textbf{Unit Price (\rupee)} & \textbf{Total (\rupee)} \\
+    \hline
+    \endhead
+    1 & & & & \\
+    \hline
+    \multicolumn{4}{|r|}{\textbf{Grand Total}} & \\
+    \hline
+\end{longtable}
+\end{center}

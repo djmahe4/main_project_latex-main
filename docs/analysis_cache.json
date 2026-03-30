@@ -1,0 +1,51 @@
+{
+  "project_name": "FIRMAI: AI-Powered IoT Firmware Vulnerability Analyzer",
+  "macros": {
+    "\\tplProjectTitle": "FIRMAI: AI-Powered IoT Firmware Vulnerability Analyzer",
+    "\\tplCourseName": "Project Phase II",
+    "\\tplCourseCode": "coursecode",
+    "\\tplProjectYear": "March 2026",
+    "\\tplDepartmentName": "Internet of Things & Cyber Security (CSOT)",
+    "\\tplCollegeName": "Providence College of Engineering, Chengannur",
+    "\\tplRomanFont": "Times New Roman",
+    "\\tplSansFont": "Arial",
+    "\\tplMonoFont": "Courier New",
+    "\\tplMonoFontColor": "0019D4",
+    "\\tplSubmissionDate": "\\today",
+    "\\tplStudentA": "ABHIRAM G NAIR",
+    "\\tplRegA": "PRC22CSOT001",
+    "\\tplStudentB": "NAVOMI TITUS",
+    "\\tplRegB": "PRC22CSOT019",
+    "\\tplStudentC": "SPANDANA NAIR",
+    "\\tplRegC": "PRC22CSOT025",
+    "\\tplStudentD": "VIGNESH S KUMAR",
+    "\\tplRegD": "PRC22CSOT028",
+    "\\tplPrincipalName": "PrincipalName",
+    "\\tplHODName": "Ms. Salitha M.K",
+    "\\tplProjectGuide": "Ms. Praseetha S Nair",
+    "\\tplProjectGuideDesignation": "Assistant Professor",
+    "\\tplProjectCoordinator": "Ms. Salitha M.K",
+    "\\tplProjectCoordinatorDesignation": "Assistant Professor"
+  },
+  "document_structure": {
+    "chapters": [
+      { "id": "chap_intro", "title": "Introduction", "file": "chapters/ch1_introduction.tex" },
+      { "id": "chap_lit", "title": "Literature Review", "file": "chapters/ch2_literature_review.tex" },
+      { "id": "chap_analysis", "title": "System Analysis", "file": "chapters/ch3_system_analysis.tex" },
+      { "id": "chap_method", "title": "Methodology", "file": "chapters/ch4_methodology.tex" },
+      { "id": "chap_design", "title": "System Design", "file": "chapters/ch5_system_design.tex" },
+      { "id": "chap_impl", "title": "System Implementation", "file": "chapters/ch6_system_implementation.tex" },
+      { "id": "chap_test", "title": "Testing", "file": "chapters/ch7_testing.tex" },
+      { "id": "chap_results", "title": "Results", "file": "chapters/ch8_results.tex" },
+      { "id": "chap_concl", "title": "Conclusions", "file": "chapters/ch9_conclusions.tex" }
+    ]
+  },
+  "extracted_items": [],
+  "mapping_proposals": [],
+  "retrospective_report": {
+    "issues": [],
+    "suggestions": [],
+    "last_analysis": null
+  },
+  "last_updated": "2026-03-30T17:21:25Z"
+}

@@ -1,0 +1,119 @@
+\documentclass[12pt,a4paper]{report}
+
+% --- Preamble (modular) ---
+\input{Preamble/packages}
+\input{Preamble/fonts}
+\input{Preamble/pagestyle}
+\input{Preamble/sectionoptions}
+\input{Preamble/macro}
+
+
+\begin{document}
+
+% =====================================================
+% SOFT BINDING FRONT COVER (PDF page 1, no page number)
+% =====================================================
+\pagenumbering{gobble}
+\pagestyle{empty}
+\include{frontmatter/cover_front}
+\cleardoublepage
+
+% =====================================================
+% FRONT MATTER (roman numerals)
+% =====================================================
+\pagestyle{fancy}
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+\include{frontmatter/titlepage}
+\include{frontmatter/certificate}
+\include{frontmatter/declaration}
+
+% ACKNOWLEDGEMENTS (ToC entry)
+\include{frontmatter/acknowledgements}
+
+% ABSTRACT (ToC entry)
+\include{frontmatter/abstract}
+
+% TABLE OF CONTENTS
+\cleardoublepage
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\tableofcontents
+
+% LIST OF FIGURES (ToC entry)
+\cleardoublepage
+\renewcommand{\listfigurename}{LIST OF FIGURES}
+\listoffigures
+\addcontentsline{toc}{chapter}{LIST OF FIGURES}
+
+% LIST OF TABLES (ToC entry)
+\cleardoublepage
+\renewcommand{\listtablename}{LIST OF TABLES}
+\listoftables
+\addcontentsline{toc}{chapter}{LIST OF TABLES}
+
+% LIST OF ABBREVIATIONS (ToC entry)
+\cleardoublepage
+\include{frontmatter/abbreviations}
+
+% =====================================================
+% MAIN MATTER (arabic numerals, Chapter 1 onwards)
+% =====================================================
+\cleardoublepage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% CHAPTER 1: INTRODUCTION
+\include{chapters/ch1_introduction}
+
+% CHAPTER 2: LITERATURE REVIEW
+\include{chapters/ch2_literature_review}
+
+% CHAPTER 3: SYSTEM ANALYSIS
+\include{chapters/ch3_system_analysis}
+
+% CHAPTER 4: METHODOLOGY
+\include{chapters/ch4_methodology}
+
+% CHAPTER 5: SYSTEM DESIGN
+\include{chapters/ch5_system_design}
+
+% CHAPTER 6: SYSTEM IMPLEMENTATION
+\include{chapters/ch6_system_implementation}
+
+% CHAPTER 7: TESTING
+\include{chapters/ch7_testing}
+
+% CHAPTER 8: RESULTS
+\include{chapters/ch8_results}
+
+% CHAPTER 9: CONCLUSIONS
+\include{chapters/ch9_conclusions}
+
+% =====================================================
+% BACK MATTER
+% =====================================================
+
+% REFERENCES (ToC entry)
+\cleardoublepage
+\addcontentsline{toc}{chapter}{REFERENCES}
+\bibliographystyle{plain}
+\bibliography{references}
+
+% LIST OF PUBLICATIONS (ToC entry)
+\cleardoublepage
+\include{chapters/list_of_publications}
+
+% APPENDIX 1 & APPENDIX 2 (ToC entries)
+\cleardoublepage
+\include{chapters/appendices}
+
+% =====================================================
+% SOFT BINDING REAR COVER (last PDF page, no page number)
+% =====================================================
+\cleardoublepage
+\pagenumbering{gobble}
+\pagestyle{empty}
+\include{frontmatter/cover_rear}
+
+\end{document}
