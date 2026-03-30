@@ -10,53 +10,110 @@
 
 \begin{document}
 
-% Front matter
-\include{frontmatter/titlepage}
+% =====================================================
+% SOFT BINDING FRONT COVER (PDF page 1, no page number)
+% =====================================================
+\pagenumbering{gobble}
+\pagestyle{empty}
+\include{frontmatter/cover_front}
+\cleardoublepage
+
+% =====================================================
+% FRONT MATTER (roman numerals)
+% =====================================================
+\pagestyle{fancy}
 \pagenumbering{roman}
+\setcounter{page}{1}
+
+\include{frontmatter/titlepage}
 \include{frontmatter/certificate}
 \include{frontmatter/declaration}
+
+% ACKNOWLEDGEMENTS (ToC entry)
 \include{frontmatter/acknowledgements}
+
+% ABSTRACT (ToC entry)
 \include{frontmatter/abstract}
 
-% Table of Contents
-\cleardoublepage % Ensures ToC starts on an odd page, applying fancy style
-	\renewcommand{\contentsname}{TABLE OF CONTENTS}
-	\tableofcontents
+% TABLE OF CONTENTS
+\cleardoublepage
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\tableofcontents
 
-% List of Figures
+% LIST OF FIGURES (ToC entry)
 \cleardoublepage
 \renewcommand{\listfigurename}{LIST OF FIGURES}
 \listoffigures
-\addcontentsline{toc}{chapter}{LIST OF FIGURES} % Add LoF to ToC
+\addcontentsline{toc}{chapter}{LIST OF FIGURES}
 
-% List of Tables
+% LIST OF TABLES (ToC entry)
 \cleardoublepage
 \renewcommand{\listtablename}{LIST OF TABLES}
 \listoftables
-\addcontentsline{toc}{chapter}{LIST OF TABLES} % Add LoT to ToC
+\addcontentsline{toc}{chapter}{LIST OF TABLES}
 
-% List of Abbreviations
+% LIST OF ABBREVIATIONS (ToC entry)
 \cleardoublepage
 \include{frontmatter/abbreviations}
 
-% Main Chapters
-\cleardoublepage % Start main content on an odd page
-% Switch back to Arabic numerals for main content
+% =====================================================
+% MAIN MATTER (arabic numerals, Chapter 1 onwards)
+% =====================================================
+\cleardoublepage
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
+% CHAPTER 1: INTRODUCTION
 \include{chapters/ch1_introduction}
+
+% CHAPTER 2: LITERATURE REVIEW
 \include{chapters/ch2_literature_review}
+
+% CHAPTER 3: SYSTEM ANALYSIS
 \include{chapters/ch3_system_analysis}
+
+% CHAPTER 4: METHODOLOGY
 \include{chapters/ch4_methodology}
-\include{chapters/ch5_system_implementation}
-\include{chapters/ch6_testing_and_results}
-\include{chapters/ch7_conclusions}
 
-\include{chapters/appendices}
+% CHAPTER 5: SYSTEM DESIGN
+\include{chapters/ch5_system_design}
 
-% Bibliography
+% CHAPTER 6: SYSTEM IMPLEMENTATION
+\include{chapters/ch6_system_implementation}
+
+% CHAPTER 7: TESTING
+\include{chapters/ch7_testing}
+
+% CHAPTER 8: RESULTS
+\include{chapters/ch8_results}
+
+% CHAPTER 9: CONCLUSIONS
+\include{chapters/ch9_conclusions}
+
+% =====================================================
+% BACK MATTER
+% =====================================================
+
+% REFERENCES (ToC entry)
+\cleardoublepage
+\addcontentsline{toc}{chapter}{REFERENCES}
 \bibliographystyle{plain}
 \bibliography{references}
+
+% LIST OF PUBLICATIONS (ToC entry)
+\cleardoublepage
+\include{chapters/list_of_publications}
+
+% APPENDIX 1 & APPENDIX 2 (ToC entries)
+\cleardoublepage
+\include{chapters/appendices}
+
+% =====================================================
+% SOFT BINDING REAR COVER (last PDF page, no page number)
+% =====================================================
+\cleardoublepage
+\pagenumbering{gobble}
+\pagestyle{empty}
+\include{frontmatter/cover_rear}
 
 \end{document}

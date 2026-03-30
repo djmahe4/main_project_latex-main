@@ -18,6 +18,13 @@
 % Enable dots (leaders) for chapters in the Table of Contents
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
 
+% --- TOC/LOF/LOT spacing fix (prevents run-together entries) ---
+\setlength{\cftbeforechapskip}{6pt}
+\setlength{\cftbeforesecskip}{2pt}
+\setlength{\cftbeforesubsecskip}{1pt}
+\renewcommand{\cftchapfont}{\bfseries}
+\renewcommand{\cftchappagefont}{\bfseries}
+
 % --- Section Formatting ---
 \titleformat{\section}
 {\normalfont\Large\bfseries}
