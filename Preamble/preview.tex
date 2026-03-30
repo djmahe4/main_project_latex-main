@@ -1,0 +1,21 @@
+% preview.tex - Layout-Only 'Skeleton' Mode
+% This file is injected during 'make preview' to show design without content.
+
+\usepackage{lipsum} % For placeholder text
+
+% Redefine chapter to show title but hide body
+\let\oldchapter\chapter
+\renewcommand{\chapter}[1]{
+    \oldchapter{#1}
+    \begin{center}
+        \textit{[ Preview Mode: Content Suppressed ]}
+    \end{center}
+    \lipsum[1-2] % Optional: small placeholder to see font/spacing
+    \excludecomment{chaptercontent} % If using comment package
+}
+
+% Alternative: Just show frontmatter and TOC
+% This is handled better by simply not inputting chapters in the main file
+% but the Makefile injects this to override behavior globally.
+
+\typeout{>>> SKELETON PREVIEW MODE ACTIVE <<<}

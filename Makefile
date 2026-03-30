@@ -3,34 +3,31 @@
 
 MAIN = main
 OUTPUT_DIR = build
-LATEX = pdflatex
-LATEX_FLAGS = -interaction=nonstopmode -halt-on-error -output-directory=$(OUTPUT_DIR)
+LATEX = xelatex
+LATEX_FLAGS = -interaction=nonstopmode -halt-on-error
 
-.PHONY: all clean generate view
+.PHONY: all clean generate view preview isolate titlepage scan
 
-all: $(OUTPUT_DIR) $(MAIN).pdf
-
-$(OUTPUT_DIR):
-	mkdir -p $(OUTPUT_DIR)
+all: $(MAIN).pdf
 
 $(MAIN).pdf: $(MAIN).tex Preamble/*.tex frontmatter/*.tex chapters/*.tex
 	$(LATEX) $(LATEX_FLAGS) $(MAIN).tex
-	# Runbibtex if needed, or use latexmk for automatic handling
-	bibtex $(OUTPUT_DIR)/$(MAIN) || true
+	# bibtex $(MAIN) || true # Run if needed
 	$(LATEX) $(LATEX_FLAGS) $(MAIN).tex
 	$(LATEX) $(LATEX_FLAGS) $(MAIN).tex
-	cp $(OUTPUT_DIR)/$(MAIN).pdf .
 
 clean:
-	rm -rf $(OUTPUT_DIR)
-	rm -f $(MAIN).pdf
+	powershell -Command "Remove-Item -Path *.aux, *.log, *.out, *.toc, *.lof, *.lot, *.blg, *.bbl, $(MAIN).pdf -ErrorAction SilentlyContinue; if (Test-Path $(OUTPUT_DIR)) { Remove-Item -Recurse -Force $(OUTPUT_DIR) }"
 
-# Helper to scan and update cache (AI-agent command)
+preview:
+	@echo ">>> Starting Skeleton Preview (Python Studio)..."
+	@python skills/latex-template-architect/scripts/latex_studio.py preview --main $(MAIN).tex --output docs/preview
+
+isolate:
+	@python skills/latex-template-architect/scripts/latex_studio.py isolate --target $(TARGET) --output docs/preview
+
+titlepage:
+	@python skills/latex-template-architect/scripts/latex_studio.py isolate --target frontmatter/titlepage.tex --output docs/preview
+
 scan:
-	@echo "Running iterative scan..."
-	# This would be a script call in a real automation pipeline
-	@echo "Scan complete. docs/analysis_cache.json updated."
-
-generate:
-	@echo "Generating new project based on config.tex..."
-	@make all
+	@python skills/latex-template-architect/scripts/scan_codebase.py --source $(SOURCE)

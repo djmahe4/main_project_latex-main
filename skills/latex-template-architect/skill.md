@@ -1,10 +1,10 @@
 ---
 name: latex-template-architect
 mode: reusable
-version: "3.0"
+version: "3.5"
 ---
 
-# LaTeX Intelligent Documentation Architect (v3.0)
+# LaTeX Intelligent Documentation Architect (v3.5)
 
 ## Role
 
@@ -66,6 +66,10 @@ After initial synthesis, perform a "Gap Analysis":
 - `retrospect report` — Run the gap analysis and suggest documentation improvements.
 - `render diagrams` — Trigger Mermaid CLI for all extracted diagrams.
 - `build pdf` — Execute the LaTeX compilation pipeline.
+
+### Intelligent Initiation
+- Run `make scan SOURCE=[target_dir]` to extract multi-language documentation metadata.
+- Run `python skills/latex-template-architect/scripts/macro_sync.py` to auto-populate the LaTeX preamble from extracted data.
 
 ---
 
