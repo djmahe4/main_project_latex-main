@@ -68,3 +68,19 @@ python scripts/latex_studio.py isolate --target chapters/introduction.tex
 ```bash
 python scripts/architect_doctor.py --skip-latex
 ```
+
+## 5. pdf_merger.py
+**Purpose:** Merges the generated `main.pdf` with optional external front and back cover PDFs.
+| Argument | Default | Description |
+| :--- | :--- | :--- |
+| `--main` | `examples/main.pdf` | Path to the generated main PDF.
+| `--front` | `None` | Optional path to an external front cover PDF. |
+| `--back` | `None` | Optional path to an external back cover PDF. |
+| `--output` | `examples/main_final.pdf` | Path for the merged output PDF. |
+
+**Example:**
+```bash
+python scripts/pdf_merger.py --main examples/main.pdf \
+  --front external_covers/front/cover.pdf \
+  --back external_covers/back/cover.pdf
+``` 

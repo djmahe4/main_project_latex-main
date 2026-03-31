@@ -71,6 +71,7 @@ After initial synthesis, perform a "Gap Analysis":
 | `make preview` | `latex_studio.py` | Generates a layout-only Skeleton PDF. |
 | `make isolate` | `latex_studio.py` | Builds a single `.tex` file in isolation for design checks. |
 | `make doctor` | `architect_doctor.py` | Performs a system health check. |
+| `make merge` | `pdf_merger.py` | Merges external PDF covers with generated main.pdf (optional). |
 
 > [!TIP]
 > Each automation tool supports a comprehensive CLI interface via `argparse`. For a full list of arguments, defaults, and advanced usage, refer to the [Scripts Reference Guide](./scripts.md).

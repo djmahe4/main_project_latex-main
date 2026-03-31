@@ -19,9 +19,9 @@ PATTERNS = {
     '.sh':  r'#.*'
 }
 
-IGNORE_DIRS = {".git", "node_modules", "vendor", ".gemini", "Preamble", "frontmatter", "chapters", "examples", "docs", "assets", "skills"}
+IGNORE_DIRS = {'.git', 'node_modules', 'vendor', '.gemini', 'logs', 'tmp', 'build', 'dist', '__pycache__'}
 
-def scan(source_path, project_root):
+def scan(source_path):
     extracted_data = []
     source = Path(source_path).resolve()
     
@@ -68,7 +68,7 @@ if __name__ == "__main__":
         IGNORE_DIRS = set(args.ignore)
     
     print(f">>> Architect Scan Initialized: {args.source}")
-    data = scan(args.source, ".")
+    data = scan(args.source)
     
     # Ensure output path is absolute or project-relative
     output_file = Path(args.output)

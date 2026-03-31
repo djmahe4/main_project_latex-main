@@ -3,7 +3,7 @@
 
 MAIN = main
 OUTPUT_DIR = build
-LATEX = pdflatex
+LATEX = xelatex
 LATEX_FLAGS = -interaction=nonstopmode -halt-on-error -output-directory=$(OUTPUT_DIR)
 
 .PHONY: all clean generate view

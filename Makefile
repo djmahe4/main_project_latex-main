@@ -8,19 +8,22 @@ LATEX_FLAGS = -interaction=nonstopmode -halt-on-error
 
 .PHONY: all clean generate view preview isolate titlepage scan
 
-all: $(MAIN).pdf
-
-$(MAIN).pdf: $(MAIN).tex Preamble/*.tex frontmatter/*.tex chapters/*.tex
 SOURCE = .
 TARGET = frontmatter/abstract.tex
 OUTPUT = docs/preview
 IGNORE = .git node_modules .gemini
 
-.PHONY: all preview isolate titlepage scan sync doctor clean
+.PHONY: all preview isolate titlepage scan sync doctor clean merge
 
 all:
 	@echo ">>> Building LaTeX Production PDF..."
-	@xelatex -interaction=nonstopmode -halt-on-error $(MAIN).tex
+	@mkdir -p logs examples
+	@$(LATEX) $(LATEX_FLAGS) -output-directory=logs $(MAIN).tex
+	@bibtex logs/$(MAIN) || true
+	@$(LATEX) $(LATEX_FLAGS) -output-directory=logs $(MAIN).tex
+	@$(LATEX) $(LATEX_FLAGS) -output-directory=logs $(MAIN).tex
+	@mv logs/$(MAIN).pdf examples/
+	@echo ">>> Build complete! Output → examples/$(MAIN).pdf"
 
 preview:
 	@echo ">>> Starting Skeleton Preview (Python Studio)..."
@@ -46,4 +49,13 @@ doctor:
 	@python skills/latex-template-architect/scripts/architect_doctor.py
 
 clean:
-	powershell -Command "Remove-Item -Path *.aux, *.log, *.out, *.toc, *.lof, *.lot, *.blg, *.bbl, $(MAIN).pdf -ErrorAction SilentlyContinue; if (Test-Path $(OUTPUT_DIR)) { Remove-Item -Recurse -Force $(OUTPUT_DIR) }"
+	rm -f *.aux *.log *.out *.toc *.lof *.lot *.blg *.bbl $(MAIN).pdf
+	rm -rf logs $(OUTPUT_DIR)
+
+merge:
+	@echo ">>> Merging PDF with external covers..."
+	@python skills/latex-template-architect/scripts/pdf_merger.py \
+		--main examples/$(MAIN).pdf \
+		--front $(EXTERNAL_FRONT) \
+		--back $(EXTERNAL_BACK) \
+		--output examples/$(MAIN)_final.pdf

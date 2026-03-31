@@ -87,6 +87,52 @@
    - Use the root `Makefile` -> `make`.
    - Ensure `main/production` mode is active in `config.tex`.
 
-3. VERIFY ARTIFACTS
+3. APPEND COVERS (Optional)
+   - If using external PDF covers:
+     - Ensure PDFs are in `external_covers/front/` and `external_covers/back/`
+     - Run `make merge EXTERNAL_FRONT=external_covers/front/cover.pdf EXTERNAL_BACK=external_covers/back/cover.pdf`
+   - If using LaTeX covers: Skip this step (already included in compilation)
+
+4. VERIFY ARTIFACTS
    - Final check of references, indices, and frontmatter.
 ```
+
+---
+
+## Workflow 6: External Cover Integration
+
+**Trigger:** "Add custom covers" / "Use external PDFs for front/back"
+
+```markdown
+1. PREPARE COVER PDFs
+   - Create or download front/back cover PDFs with embedded text boxes
+   - Save to: external_covers/front/cover.pdf and external_covers/back/cover.pdf
+   - OR modify the defaults provided in external_covers/
+
+2. CONFIGURE MODE (Optional)
+   - Edit Preamble/config.tex and set: \newcommand{\tplCoverMode}{external}
+   - This is optional—the merge script works regardless of LaTeX settings
+
+3. GENERATE MAIN PDF
+   - Run `make all` (generates examples/main.pdf)
+
+4. MERGE WITH COVERS
+   - Option A (Explicit):
+     make merge EXTERNAL_FRONT=external_covers/front/cover.pdf EXTERNAL_BACK=external_covers/back/cover.pdf
+   - Option B (Configured paths):
+     make merge
+
+5. OUTPUT
+   - Final PDF: examples/main_final.pdf
+   - Includes: [Front Cover] + [Main Document] + [Back Cover]
+```
+
+---
+
+## Quick Reference: Cover Modes
+
+| Mode | When to Use | Integration |
+|:---|:---|:---|
+| **LaTeX** (`tplCoverMode=latex`) | Default; use template's cover_front.tex / cover_rear.tex | Automated in `make all` |
+| **External** (`tplCoverMode=external`) | Custom PDF covers with special formatting/watermarks | Manual: `make merge` after `make all` |
+| **Hybrid** | Use both (LaTeX mode active, but also run merge) | `make all && make merge` |

@@ -59,11 +59,19 @@ main_project_latex-main/
 │
 ├── examples/                 # ✅ Compiled output — mirrors repo structure
 │   ├── main.pdf              # Generated PDF (mirrors main.tex)
+│   ├── main_final.pdf        # Final PDF with external covers (if applicable)
 │   ├── docs/
 │   │   └── diagrams/
 │   │       ├── structure.png # Generated PNG (mirrors docs/diagrams/structure.mmd)
 │   │       └── build-flow.png# Generated PNG (mirrors docs/diagrams/build-flow.mmd)
 │   └── README.md             # Output directory documentation
+│
+├── external_covers/          # 🎨 Optional custom PDF covers
+│   ├── front/
+│   │   └── cover.pdf         # Custom front cover (optional)
+│   ├── back/
+│   │   └── cover.pdf         # Custom back cover (optional)
+│   └── README.md             # Cover setup instructions
 │
 └── skills/                   # Automation skill definitions
     └── latex-template/
@@ -114,14 +122,14 @@ mv logs/main.pdf examples/
 
 ## ✏️ Customisation Guide
 
-### 1. Project details (`Preamble/macro.tex`)
+### 1. Project details (`Preamble/config.tex`)
 Change the title, authors, department, and college:
 ```latex
-\newcommand{\thetitle}{Your Project Title}
-\newcommand{\studentA}{FULL NAME}
-\newcommand{\regA}{ROLLNUMBER}
-\newcommand{\thedepartment}{Your Department}
-\newcommand{\thecollege}{Your College}
+\newcommand{\tplProjectTitle}{Your Project Title}
+\newcommand{\tplStudentA}{FULL NAME}
+\newcommand{\tplRegA}{ROLLNUMBER}
+\newcommand{\tplDepartmentName}{Your Department}
+\newcommand{\tplCollegeName}{Your College}
 ```
 
 ### 2. Front matter (`frontmatter/`)
@@ -208,6 +216,39 @@ and are ignored by `.gitignore`.
 
 ---
 
-## 📄 License
+## 🎨 Optional External Covers
+
+By default, this template uses LaTeX frontmatter for covers (`frontmatter/cover_front.tex` and `frontmatter/cover_rear.tex`).
+For custom designs, you can optionally use external PDF covers.
+
+### Quick Example
+
+1. **Prepare** external PDF covers (8.5" × 11" or A4)
+2. **Place** them in `external_covers/front/cover.pdf` and `external_covers/back/cover.pdf`
+3. **Build** and **merge**:
+   ```bash
+   make all    # Generate main.pdf
+   make merge  # Append external covers → examples/main_final.pdf
+   ```
+
+### When to Use External Covers
+
+| Scenario | Solution |
+|----------|----------|
+| Using template's LaTeX covers | Just run `make all` ✅ |
+| Custom printed designs | Place PDFs in `external_covers/` and run `make merge` |
+| Combination (LaTeX + external) | Keep LaTeX mode active AND run `make merge` for double covers |
+| Text box fills (print provider) | Create PDF with embedded form fields, fill, then merge |
+
+### Full Documentation
+
+See `external_covers/README.md` for:
+- Step-by-step setup
+- Design guidelines
+- Tools recommendations
+- Troubleshooting
+- Python API usage
+
+---
 
 This template is provided for academic use.

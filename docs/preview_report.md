@@ -5,7 +5,9 @@ This document tracks the current "Visual Schema" of the LaTeX project. Use the c
 ## 🎨 Active Design Variants
 | Variant | Status | Last Build | Preview Link |
 | :--- | :--- | :--- | :--- |
-| **Final Template** | `In Progress` | - | [example_firmai.pdf](./examples/example_firmai.pdf) |
+| **Example Template** | `In Progress(Out-of-sync with the template)` | - | [example_firmai.pdf](../examples/example_firmai.pdf) |
+| **Actual Template**| `Should be in sync with the template` | - | [main.pdf](../examples/main.pdf) |
+| **Final PDF with External Covers** | `In Progress` | - | [main_final.pdf](../examples/main_final.pdf) |
 
 ## 🧪 Surgical Builds (Isolated Previews)
 Run these commands to build specific pages/components in isolation:
