@@ -8,19 +8,23 @@ from pathlib import Path
 
 PREVIEW_INJECTION = r"\input{Preamble/preview.tex}"
 
-def run_latex(main_file):
-    # Try xelatex then pdflatex
-    for engine in ["xelatex", "pdflatex"]:
+def run_latex(main_file, engine=None):
+    # Use specified engine or fallback to xelatex then pdflatex
+    engines = [engine] if engine else ["xelatex", "pdflatex"]
+    for eng in engines:
         try:
-            print(f">>> Attempting build with {engine}...")
-            cmd = [engine, "-interaction=nonstopmode", "-halt-on-error", main_file]
+            print(f">>> Attempting build with {eng}...")
+            cmd = [eng, "-interaction=nonstopmode", "-halt-on-error", main_file]
             subprocess.run(cmd, check=True)
             return True
         except (subprocess.CalledProcessError, FileNotFoundError):
+            if engine:
+                print(f"ERROR: Specified engine '{engine}' failed or not found.")
+                break
             continue
     return False
 
-def build_preview(main_tex, output_dir):
+def build_preview(main_tex, output_dir, engine=None):
     content = Path(main_tex).read_text(encoding='utf-8')
     # Inject preview logic before \begin{document}
     new_content = content.replace(r"\begin{document}", f"{PREVIEW_INJECTION}\n\\begin{{document}}")
@@ -28,7 +32,7 @@ def build_preview(main_tex, output_dir):
     temp_file = "main_preview_temp.tex"
     Path(temp_file).write_text(new_content, encoding='utf-8')
     
-    if run_latex(temp_file):
+    if run_latex(temp_file, engine=engine):
         output_path = Path(output_dir) / "skeleton_preview.pdf"
         output_path.parent.mkdir(parents=True, exist_ok=True)
         os.rename("main_preview_temp.pdf", output_path)
@@ -40,7 +44,7 @@ def build_preview(main_tex, output_dir):
     for f in Path(".").glob("main_preview_temp.*"):
         f.unlink()
 
-def build_isolate(target_file, output_dir):
+def build_isolate(target_file, output_dir, engine=None):
     target = Path(target_file)
     basename = target.stem
     temp_file = f"isolate_{basename}.tex"
@@ -59,7 +63,7 @@ def build_isolate(target_file, output_dir):
 """
     Path(temp_file).write_text(wrapper, encoding='utf-8')
     
-    if run_latex(temp_file):
+    if run_latex(temp_file, engine=engine):
         output_path = Path(output_dir) / f"{basename}_preview.pdf"
         output_path.parent.mkdir(parents=True, exist_ok=True)
         os.rename(f"isolate_{basename}.pdf", output_path)
@@ -90,9 +94,9 @@ if __name__ == "__main__":
         main_tex = Path(args.main)
         if not main_tex.is_absolute():
              main_tex = root_dir / args.main
-        build_preview(main_tex, output_dir)
+        build_preview(main_tex, output_dir, engine=args.engine)
     elif args.mode == "isolate":
         if not args.target:
             print("ERROR: --target is required for isolation mode.")
             sys.exit(1)
-        build_isolate(args.target, output_dir)
+        build_isolate(args.target, output_dir, engine=args.engine)

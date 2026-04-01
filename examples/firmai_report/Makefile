@@ -13,7 +13,7 @@ all: $(OUTPUT_DIR) $(MAIN).pdf
 $(OUTPUT_DIR):
 	mkdir -p $(OUTPUT_DIR)
 
-$(MAIN).pdf: $(MAIN).tex Preamble/*.tex frontmatter/*.tex chapters/*.tex
+$(MAIN).pdf: $(MAIN).tex Preamble/*.tex frontmatter/*.tex chapters/*.tex references.bib
 	$(LATEX) $(LATEX_FLAGS) $(MAIN).tex
 	# Runbibtex if needed, or use latexmk for automatic handling
 	bibtex $(OUTPUT_DIR)/$(MAIN) || true

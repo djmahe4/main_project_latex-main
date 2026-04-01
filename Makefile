@@ -13,6 +13,10 @@ TARGET = frontmatter/abstract.tex
 OUTPUT = docs/preview
 IGNORE = .git node_modules .gemini
 
+# External covers (optional overrides)
+EXTERNAL_FRONT ?=
+EXTERNAL_BACK ?=
+
 .PHONY: all preview isolate titlepage scan sync doctor clean merge
 
 all:
@@ -51,11 +55,12 @@ doctor:
 clean:
 	rm -f *.aux *.log *.out *.toc *.lof *.lot *.blg *.bbl $(MAIN).pdf
 	rm -rf logs $(OUTPUT_DIR)
+	rm -f examples/$(MAIN).pdf examples/$(MAIN)_final.pdf
 
 merge:
 	@echo ">>> Merging PDF with external covers..."
 	@python skills/latex-template-architect/scripts/pdf_merger.py \
 		--main examples/$(MAIN).pdf \
-		--front $(EXTERNAL_FRONT) \
-		--back $(EXTERNAL_BACK) \
+		$(if $(EXTERNAL_FRONT),--front $(EXTERNAL_FRONT)) \
+		$(if $(EXTERNAL_BACK),--back $(EXTERNAL_BACK)) \
 		--output examples/$(MAIN)_final.pdf
