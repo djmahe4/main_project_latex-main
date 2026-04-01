@@ -1,0 +1,20 @@
+[
+  {
+    "file": "firmware\\sensor.ino",
+    "language": "ino",
+    "content": "// @component: Sensor Firmware\nvoid setup() {\n  // Initialize hardware\n}\n\nvoid loop() {\n  // @logic: Read data every 100ms\n}",
+    "type": "comment"
+  },
+  {
+    "file": "src\\main.py",
+    "language": "py",
+    "content": "\"\"\"\nModule: Main Controller\nThis module handles the central logic for the sample project.\n\"\"\"",
+    "type": "comment"
+  },
+  {
+    "file": "src\\main.py",
+    "language": "py",
+    "content": "# @architecture\n# This component acts as the orchestrator.\n# ```mermaid\n# graph TD\n#   A[Sensor] --> B[Controller]\n#   B --> C[Actuator]\n# ```\n\ndef run_process():\n    \"\"\"\n    Starts the secure process.\n    @vulnerability: Potential buffer overflow if input is unchecked.\n    \"\"\"\n    pass",
+    "type": "diagram"
+  }
+]

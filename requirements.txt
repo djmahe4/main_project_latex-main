@@ -1,0 +1,11 @@
+# Optional dependencies for LaTeX Template Automator
+# Install with: pip install -r requirements.txt
+
+# PDF merging (for external covers feature)
+pypdf>=4.0.0        # Modern PDF manipulation (replaces PyPDF2)
+
+# Alternative (older versions):
+# PyPDF2>=2.0.0      # For Python < 3.8 compatibility
+
+# Note: LaTeX automation scripts (scan_codebase.py, macro_sync.py, architect_doctor.py)
+# have minimal dependencies and use only standard library modules (os, re, json, argparse).

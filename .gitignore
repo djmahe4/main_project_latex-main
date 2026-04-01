@@ -18,14 +18,21 @@
 *.vrb
 *.dvi
 
-## Generated PDF (uncomment if you want to track the PDF)
-# *.pdf
-
-## Build output directory
+## Build output directory (intermediate artifacts)
 logs/
+
+## Generated PDF lives in examples/ — tracked intentionally
+## Uncomment the next line only if you do NOT want to track the output PDF
+# examples/main.pdf
 
 ## Source/working files (not part of the final document)
 content/
+
+## Mermaid generated images — live in examples/docs/diagrams/ (tracked intentionally)
+## Ignore any PNGs/SVGs accidentally placed directly in the source diagrams folder
+docs/diagrams/*.png
+docs/diagrams/*.svg
+## examples/docs/diagrams/ is NOT ignored — those are the tracked build artifacts
 
 ## OS files
 Thumbs.db
@@ -35,3 +42,5 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+docs/extracted_meta.json

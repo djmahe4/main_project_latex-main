@@ -1,0 +1,42 @@
+flowchart TD
+    A([👤 Author edits .tex files]) --> B[main.tex\nfrontmatter/ chapters/]
+    B --> C[compile.sh / compile.bat]
+    C --> D[xelatex pass 1\n→ logs/]
+    D --> E[bibtex\n→ logs/main.bbl]
+    E --> F[xelatex pass 2\n→ logs/]
+    F --> G[xelatex pass 3\n→ logs/main.pdf]
+    G --> H[mv logs/main.pdf\n→ examples/main.pdf]
+
+    subgraph Artifacts in logs/ [ignored by .gitignore]
+        D1[main.aux]
+        D2[main.toc]
+        D3[main.log]
+        D4[main.lof / main.lot]
+        D5[main.out]
+        D6[main.bbl / main.blg]
+    end
+
+    G -.-> D1
+    G -.-> D2
+    G -.-> D3
+    G -.-> D4
+    G -.-> D5
+    G -.-> D6
+
+    subgraph Output tracked in git
+        H2[examples/main.pdf ✅]
+    end
+
+    H --> H2
+
+    subgraph Diagram Generation
+        MMD1[docs/diagrams/structure.mmd]
+        MMD2[docs/diagrams/build-flow.mmd]
+        MMDC([mmdc CLI])
+        PNG1[docs/diagrams/structure.png]
+        PNG2[docs/diagrams/build-flow.png]
+        MMD1 --> MMDC
+        MMD2 --> MMDC
+        MMDC --> PNG1
+        MMDC --> PNG2
+    end
