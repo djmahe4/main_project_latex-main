@@ -92,6 +92,35 @@ README.md
 
 ---
 
+## 🏗️ Semantic Conversion Rules
+
+To maintain professional standards, all auto-generated content must follow these transformation rules:
+
+### 1. List Mapping
+- **Unordered Lists**: Convert lines starting with `-` or `*` into `\begin{itemize} ... \end{itemize}`. Each item must use `\item`.
+- **Ordered Lists**: Convert lines starting with `1.`, `2.`, etc., into `\begin{enumerate} ... \end{enumerate}`. Each item must use `\item`.
+- **Nesting**: Support up to 3 levels of nesting with proper LaTeX environment indentation.
+
+### 2. Table Mapping
+- **Source**: Markdown tables (`| Col | ... |`).
+- **Target**: `\begin{table}[h] \centering \begin{tabular}{|c|c|...|} \hline ... \hline \end{tabular} \caption{...} \end{table}`.
+- **Rules**: 
+    - Always include vertical and horizontal lines (`|` and `\hline`).
+    - Escape LaTeX special characters (`_`, `&`, `%`, `$`, `#`, `{`, `}`) within table cells.
+
+### 3. Header Hierarchies
+- Markdown `#` -> `\section{...}`
+- Markdown `##` -> `\subsection{...}`
+- Markdown `###` -> `\subsubsection{...}`
+- Never exceed 3 levels of depth for auto-synced content to avoid ToC clutter.
+
+### 4. Text Formatting
+- **Code**: ` `content` ` -> `\texttt{content}` or `\lstinline|content|`.
+- **Emphasis**: `*content*` -> `\textit{content}`.
+- **Strong**: `**content**` -> `\textbf{content}`.
+
+---
+
 ## ⚙️ Compilation Rules
 
 - Compiler: **xelatex** (required for font support)

@@ -9,41 +9,30 @@ version: "3.5"
 > [!IMPORTANT]
 > All documentation generation is governed by the [Engineering Rules & Structural Standards](./rules.md). AI Agents MUST comply with the immutable directory structure and formatting constraints defined therein.
 
-## Role
+## Phases
 
-You are an **Intelligent Documentation Architect** that transforms raw codebase metadata into high-fidelity LaTeX reports. You:
-- Perform **Fast Estimation** via multi-language comment scanning (`.py`, `.c`, `.ino`, `.js`, etc.).
-- Extract **Semantic Intelligence** (Mermaid diagrams, docstrings, architectural summaries).
-- **Map logic to chapters** based on project intent and file lineage.
-- Execute a **Retrospect Phase** to identify gaps, redundancies, and unmapped components.
+The `latex-template-architect` skill operates in three phases:
 
----
+1. **Analysis**: Extract metadata from the codebase, identifying key elements such as headings, lists, tables, and code snippets.
+2. **Transformation**: Convert the extracted metadata into LaTeX-compatible format, applying structural integrity and semantic transformation rules.
+3. **Synthesis**: Ingest the transformed metadata and update the corresponding `.tex` chapters, ensuring a cohesive and well-structured document.
 
-## 1. The 4-Step Documentation Pipeline
+## Requirements
 
-### Step 1: Scan (Recursive Project Awareness)
-- Escape the skill directory to target the parent project root.
-- Run `scripts/scan_codebase.ps1` to identify all source files.
-- **Fast Estimation**: Prioritize commented regions (`//`, `#`, `/* */`, `""" """`) for rapid context gathering.
+To ensure the production of high-quality LaTeX documents, the skill must adhere to the following standards:
 
-### Step 2: Extract (Semantic Mining)
-- Parse identified files for specific high-value identifiers:
-    - **Diagrams**: Fenced ` ```mermaid ` blocks in `.md` or code comments.
-    - **Logic**: Class/Function docstrings and file-level headers.
-    - **Metatags**: `TODO`, `NOTE`, `IMPORTANT`, `ARCHITECTURE`.
-- Store results in `docs/analysis_cache.json` under `extracted_items`.
+* **Structural Integrity**: Preserve the hierarchical structure of the metadata, using appropriate LaTeX environments such as `section`, `subsection`, and `subsubsection`.
+* **Semantic Transformation**: Accurately convert Markdown-like metadata into professional LaTeX environments, including:
+  - Lists (ordered and unordered) to `enumerate` and `itemize` environments.
+  - Tables to `tabular` environments.
+  - Code snippets to `lstlisting` or `verbatim` environments.
+* **Consistency**: Maintain consistency in formatting, spacing, and styling throughout the document.
 
-### Step 3: Map (Intelligence Layer)
-- Analyze `extracted_items` against the LaTeX `document_structure`.
-- Create `mapping_proposals` with:
-    - **Lineage**: Source file -> Target Chapter/Section.
-    - **Intent**: "Chapter 6 (Implementation) should include the logic from `src/core/auth.py`."
-    - **Confidence**: Flag ambiguous mappings for user review.
+## Guidelines
 
-### Step 4: Synthesize (LaTeX Generation)
-- Convert accepted proposals into LaTeX (`.tex`) files.
-- **Managed Deployment**: User manages the files; the engine proposes content. 
-- **Mermaid Render**: Use `mmdc` (Mermaid CLI) to convert diagrams in `docs/diagrams/` to PDF/PNG for LaTeX inclusion.
+* Use LaTeX environments and commands to create structured documents.
+* Apply semantic transformation rules for all auto-generated content.
+* Ensure clear and concise headings, subheadings, and captions.
 
 ---
 

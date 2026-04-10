@@ -1,0 +1,76 @@
+{
+  "project_name": "My Project",
+  "project_description": "Your project description here",
+  "source_dir": "./src",
+  "latex_dir": "./Chapters",
+  "output_dir": "./docs",
+  "media_dir": "./media",
+  "languages": [
+    "python"
+  ],
+  "artifact_types": {
+    "requirements": {
+      "prefixes": [
+        "REQ",
+        "USE-CASE"
+      ],
+      "destination_chapter": "System Analysis"
+    },
+    "design": {
+      "prefixes": [
+        "ARCH",
+        "SEQ",
+        "CLASS"
+      ],
+      "destination_chapter": "System Design"
+    },
+    "implementation": {
+      "prefixes": [
+        "CODE",
+        "API",
+        "CONFIG"
+      ],
+      "destination_chapter": "System Implementation"
+    },
+    "testing": {
+      "prefixes": [
+        "TC",
+        "TEST-SUITE"
+      ],
+      "destination_chapter": "Testing"
+    },
+    "verification": {
+      "prefixes": [
+        "PERF",
+        "METRIC",
+        "COVERAGE"
+      ],
+      "destination_chapter": "Results"
+    }
+  },
+  "required_doc_fields": [
+    "artifact_id",
+    "chapter",
+    "section",
+    "title",
+    "description"
+  ],
+  "optional_doc_fields": [
+    "subsection",
+    "priority",
+    "tags",
+    "author",
+    "related_artifacts",
+    "last_updated"
+  ],
+  "lint_config": {
+    "strict_mode": false,
+    "max_description_sentences": 3,
+    "check_duplicates": true
+  },
+  "coverage_config": {
+    "target_coverage_percent": 85,
+    "by_chapter": true,
+    "by_type": true
+  }
+}

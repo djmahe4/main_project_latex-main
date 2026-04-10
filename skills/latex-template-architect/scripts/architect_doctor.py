@@ -64,13 +64,15 @@ def check_latex(selected_engines=None, manual_path=None):
 def check_assets():
     print("\n>>> Checking Assets & Logos...")
     logo_dir = ROOT_DIR / "assets"
-    logos = ["PRCLogo.png", "header.png", "footer.png"]
+    logos = ["PRCLogo.png", "header.png", "footer.png"] # Replace the PRCLogo.png with your college logo
     if not logo_dir.exists():
         print(f"[FAIL] DIRECTORY MISSING: {logo_dir}")
         return
     for logo in logos:
         if (logo_dir / logo).exists():
             print(f"[OK] {logo}")
+            if logo=="PRCLogo.png":
+                print(f"[WARN] Replace the {logo} with your college logo at {logo_dir}")
         else:
             print(f"[MISSING] {logo} - Expected in {logo_dir}")
 
