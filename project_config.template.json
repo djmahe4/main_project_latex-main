@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProjectConfiguration",
+  "description": "Configuration schema for LaTeX Report Generator & Documentation Architect",
+  "type": "object",
+  "properties": {
+    "project_name": {
+      "type": "string",
+      "default": "Generic Software Project"
+    },
+    "project_description": {
+      "type": "string",
+      "default": "A comprehensive software engineering project and report."
+    },
+    "domain_keywords": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["Architecture", "Implementation", "Testing"]
+    },
+    "metadata_path": {
+      "type": "string",
+      "default": "skills/docs/extracted_meta.json"
+    },
+    "ollama": {
+      "type": "object",
+      "properties": {
+        "url": { "type": "string", "default": "http://localhost:11434/api/generate" },
+        "model": { "type": "string", "default": "llama3:8b" }
+      }
+    }
+  },
+  "required": ["project_name"]
+}
