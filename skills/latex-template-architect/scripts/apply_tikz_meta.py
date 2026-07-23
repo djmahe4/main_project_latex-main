@@ -1,7 +1,7 @@
 import json
 import os
 
-META_PATH = r"c:\Users\mahes\OneDrive\Desktop\Python-Projects\footydj_mini_project\main_project_latex-main\skills\docs\extracted_meta.json"
+META_PATH = os.getenv("PROJECT_META_PATH", os.path.join("skills", "docs", "extracted_meta.json"))
 
 TIKZ_MAP = {
     # [731] Stage 1 overview

@@ -8,9 +8,10 @@ from pathlib import Path
 # narrative_expander.py - Narrative Synthesis via Ollama/Llama3
 # Transforms FootyDJ metadata into professional academic prose.
 
-META_PATH = "skills/docs/extracted_meta.json"
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL_NAME = "llama3:8b"
+META_PATH = os.getenv("PROJECT_META_PATH", "skills/docs/extracted_meta.json")
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
+MODEL_NAME = os.getenv("OLLAMA_MODEL", "llama3:8b")
+PROJECT_NAME = os.getenv("PROJECT_NAME", "Software System")
 
 def call_ollama(prompt):
     """Calls local Ollama instance for text generation."""
@@ -30,7 +31,7 @@ def expand_narrative(content, chapter_context):
     """Synthesizes metadata into a professional paragraph."""
     prompt = f"""
     [ROLE] Senior Academic Writer
-    [TASK] Convert the following FootyDJ project metadata into a professional narrative paragraph for a LaTeX report.
+    [TASK] Convert the following {PROJECT_NAME} project metadata into a professional narrative paragraph for a LaTeX report.
     [CHAPTER] {chapter_context}
     
     [METADATA]
@@ -39,7 +40,7 @@ def expand_narrative(content, chapter_context):
     [RULES]
     - strictly NO bullet points.
     - Use scholarly, cohesive language.
-    - Preserve technical terms: YOLO, ByteTrack, OSNet, COCOMO, IoU.
+    - Preserve key domain terminology and acronyms.
     - [COMPLIANCE] Identify any bracketed placeholders like [variable] or [description] in the metadata. 
     - RESOLVE these placeholders into fluent text based on the context. Do NOT leave brackets in the final output.
     - If a placeholder is a generic "insert figure/table here", rewrite it as a graceful transition or reference (e.g., "as illustrated in the subsequent analysis").
